@@ -1,54 +1,48 @@
 class Paciente {
   var edad
   var fortalezaMuscular
-  var  nivelDeDolor
-  method fortalezaMusuclar() = fortalezaMuscular
-  method nivelDeDolor() = nivelDeDolor
-  method puedeUsar(unAparato) {
-    return 
+  var dolor
+  method edad() = edad
+  method fortalezaMuscular() = fortalezaMuscular
+  method dolor() = dolor
+  method  puedeUsar(unAparato) {
+    return
     unAparato.puedeSerUsadoPor(self)
   }
-  method usar(unAparato) {
-    if(!self.puedeUsar(unAparato)) {
-      self.error("El paciente no puede usar el aparato")
-    }
-    unAparato.esUsadoPor(self)
+  method disminuirDolor(unValor) {dolor=(dolor-unValor).max(0)}
+  method aumentarFortaleza(unValor) {fortalezaMuscular=fortalezaMuscular+unValor}
+method usar(unAparato) {
+  if(!self.puedeUsar(unAparato)) {
+    self.error("El paciente no puede usar ese aparato")
   }
-  method aumentarFortaleza(unValor) {
-    fortalezaMuscular = fortalezaMuscular + unValor
-  }
-
-  method disminuirDolor(unValor) {
-    nivelDeDolor = nivelDeDolor - unValor
-  }
+  unAparato.esUsadoPor(self)
+}
 }
 
 class Magneto {
-  method esUsadoPor(unPaciente) {
-    unPaciente.disminuirDolor(unPaciente.nivelDeDolor() * 0.1)
-  }
+  method esUsadoPor(unPaciente) {unPaciente.disminuirDolor(unPaciente.dolor() * 0.1)} 
   method puedeSerUsadoPor(unPaciente) {
     return true
   }
 }
 
-class Bicicleta {
-   method esUsadoPor(unPaciente) {
+class Bici {
+  method esUsadoPor(unPaciente) {
     unPaciente.disminuirDolor(4)
     unPaciente.aumentarFortaleza(3)
-   }
-   method puedeSerUsadoPor(unPaciente) {
-    return 
+  }
+  method puedeSerUsadoPor(unPaciente) {
+    return
     unPaciente.edad() > 8
   }
 }
 
 class Minitramp {
-   method esUsadoPor(unPaciente) {
-    unPaciente.aumentarFortaleza(unPaciente.edad())
+  method esUsadoPor(unPaciente) {
+    unPaciente.aumentarFortaleza(unPaciente.edad() * 0.1)
   }
   method puedeSerUsadoPor(unPaciente) {
-    return 
-    unPaciente.nivelDeDolor() < 20
+    return
+    unPaciente.dolor() < 20
   }
 }
